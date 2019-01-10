@@ -50,11 +50,12 @@ public class SphereRacer : MonoBehaviour
         if(rightTurn)
         {
             direction = Vector3.RotateTowards(direction, Vector3.right, 2.0f, 2.0f);
+            gameObject.transform.Rotate(0, 1.0f, 0, Space.Self);
         }
         else
         {
             direction = Vector3.RotateTowards(direction, Vector3.back, 2.0f, 2.0f);
-            gameObject.transform.Rotate()
+            gameObject.transform.Rotate(0, -1.0f, 0, Space.Self);
         }
     }
 
@@ -86,6 +87,11 @@ public class SphereRacer : MonoBehaviour
         {
             Deaccelerate();
         }
+        else if(Input.GetMouseButtonUp(0))
+        {
+            direction = new Vector3((currentTopSpeed + charge) * Mathf.Sign(gameObject.transform.position.x), 0, (currentTopSpeed + charge) * Mathf.Sign(gameObject.transform.position.z));
+            charge = 0;
+        }
         else
         {
             xMove *= Time.deltaTime * acceleration;
@@ -97,12 +103,11 @@ public class SphereRacer : MonoBehaviour
         {
             Turn(false);
         }
-        else if(Input.GetKey(KeyCode.D))
+        if (Input.GetKey(KeyCode.D))
         {
             Turn(true);
         }
         
-
         gameObject.transform.Translate(direction);
     }
 #endif

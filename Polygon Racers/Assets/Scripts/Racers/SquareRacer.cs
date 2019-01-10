@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NewBehaviourScript1 : MonoBehaviour
+public class SquareRacer : MonoBehaviour
 {
     private float friction = 1.0f;
     private const float MAX_SPEED = 20.0f;
