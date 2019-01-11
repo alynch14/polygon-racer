@@ -19,6 +19,10 @@ public class SphereRacer : MonoBehaviour
     private int charge;
     private int chargeMax;
 
+    private float departureTime;
+    private float yAccel;
+    private Vector3 rotatedDirection;
+
     public void Deaccelerate()
     {
         if (!grounded)
@@ -35,9 +39,12 @@ public class SphereRacer : MonoBehaviour
         }
     }
 
-    public Vector3 Glide()
+    public void Glide()
     {
-        throw new System.NotImplementedException();
+        if(departureTime-Time.time < 10.0f)
+        {
+            
+        }
     }
 
     public Vector3 Move()
@@ -49,13 +56,13 @@ public class SphereRacer : MonoBehaviour
     {
         if(rightTurn)
         {
-            direction = Vector3.RotateTowards(direction, Vector3.right, 2.0f, 2.0f);
-            gameObject.transform.Rotate(0, 1.0f, 0, Space.Self);
+            rotatedDirection = Vector3.RotateTowards(direction, Vector3.back, currentSpeed*Time.deltaTime, 0.0f);
+            //gameObject.transform.Rotate(0, 1.0f, 0, Space.Self);
         }
         else
         {
-            direction = Vector3.RotateTowards(direction, Vector3.back, 2.0f, 2.0f);
-            gameObject.transform.Rotate(0, -1.0f, 0, Space.Self);
+            rotatedDirection = Vector3.RotateTowards(direction, Vector3.right, 2.0f, 2.0f);
+            //gameObject.transform.Rotate(0, -1.0f, 0, Space.Self);
         }
     }
 
@@ -70,45 +77,72 @@ public class SphereRacer : MonoBehaviour
         grounded = true;
         charge = 0;
         chargeMax = BASE_CHARGE;
+        yAccel = 0f;
     }
 
     // Update is called once per frame
     void Update()
     {
-        float xMove = ((currentSpeed == 0)? 1:currentSpeed) * Mathf.Sign(gameObject.transform.position.x);
+        float xMove = ((currentSpeed == 0) ? 1 : currentSpeed) * Mathf.Sign(gameObject.transform.position.x);
         float zMove = ((currentSpeed == 0) ? 1 : currentSpeed) * Mathf.Sign(gameObject.transform.position.z);
 
         if(currentSpeed <= currentTopSpeed)
         {
             currentSpeed++;
         }
-#if UNITY_STANDALONE
+//#if UNITY_STANDALONE
         if(Input.GetMouseButton(0))
         {
             Deaccelerate();
         }
         else if(Input.GetMouseButtonUp(0))
         {
-            direction = new Vector3((currentTopSpeed + charge) * Mathf.Sign(gameObject.transform.position.x), 0, (currentTopSpeed + charge) * Mathf.Sign(gameObject.transform.position.z));
+            direction = new Vector3((currentTopSpeed + charge), 0, (currentTopSpeed + charge));
             charge = 0;
         }
         else
         {
-            xMove *= Time.deltaTime * acceleration;
-            zMove *= Time.deltaTime * acceleration;
+            //Accelerate till we reach maximum speed
+            //acceleration *= Time.deltaTime;
+            xMove *= Time.deltaTime;
+            zMove *= Time.deltaTime;
+            if(xMove > currentTopSpeed)
+            {
+                xMove = currentTopSpeed;
+            }
+            if(zMove > currentTopSpeed)
+            {
+                zMove = currentTopSpeed;
+            }
+            if (Input.GetKey(KeyCode.A))
+            {
+                Turn(false);
+            }
+            if (Input.GetKey(KeyCode.D))
+            {
+                Turn(true);
+            }
+            if (!grounded)
+            {
+                Glide();
+            }
+            else
+            {
+                yAccel = 0f;
+            }
 
             direction = new Vector3(xMove, 0, zMove);
         }
-        if (Input.GetKey(KeyCode.A))
-        {
-            Turn(false);
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            Turn(true);
-        }
-        
+
+        transform.rotation = Quaternion.LookRotation(rotatedDirection);
         gameObject.transform.Translate(direction);
     }
-#endif
+//#endif
+
+    //Only executes when car exits the collision with a ramp
+    /*public void OnCollisionExit(Collision collision)
+    {
+        grounded = false;
+        departureTime = Time.time;
+    }*/
 }
