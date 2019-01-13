@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,10 +6,10 @@ public class BulletScript : MonoBehaviour
 {
     Vector3 myDirection;
     Vector3 shipPosition;
-    public GameObject vessel;
+    string vessel;
     Color myColor;
 
-    public void SetVessel(GameObject vessel)
+    public void SetVessel(string vessel)
     {
         this.vessel = vessel;
     }
@@ -17,11 +17,11 @@ public class BulletScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (vessel.CompareTag("Enemy"))
+        if(gameObject.GetComponentInParent<TriangleFighter>().gameObject.CompareTag("Enemy"))
         {
             myColor = Color.red;
         }
-        if (vessel.CompareTag("Player"))
+        if (gameObject.GetComponentInParent<TriangleFighter>().gameObject.CompareTag("Player"))
         {
             myColor = Color.blue;
         }
@@ -30,6 +30,11 @@ public class BulletScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (gameObject.GetComponentInParent<TriangleFighter>().gameObject.CompareTag("Player"))
+        {
+            myDirection = new Vector3(0, 3.0f * Time.deltaTime, 0);
+        }
+
+        gameObject.transform.Translate(myDirection);
     }
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TriangleRacer : MonoBehaviour
+public class TriangleFighter : MonoBehaviour
 {
     Vector3 direction;
     public GameObject bullet;
@@ -12,7 +12,7 @@ public class TriangleRacer : MonoBehaviour
     {
         if (bullet.CompareTag("Ammo"))
         {
-            bullet.GetComponent<BulletScript>().SetVessel(gameObject);
+            bullet.GetComponent<BulletScript>().SetVessel("Player");
         }
     }
 
@@ -22,7 +22,7 @@ public class TriangleRacer : MonoBehaviour
         float xMove = 0, yMove = 0;
         if (Input.GetMouseButton(0))
         {
-            Instantiate(bullet);
+            Instantiate(bullet, gameObject.transform, true);
         }
         if (Input.GetKey(KeyCode.A))
         {
@@ -41,7 +41,7 @@ public class TriangleRacer : MonoBehaviour
             yMove = -1;
         }
 
-        gameObject.transform.Translate(new Vector3(xMove * Time.deltaTime, yMove * Time.deltaTime));
+        gameObject.transform.Translate(new Vector3(0, yMove * Time.deltaTime, -(xMove * Time.deltaTime)));
     }
 }
 
