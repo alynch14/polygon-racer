@@ -17,11 +17,11 @@ public class BulletScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if(gameObject.GetComponentInParent<TriangleFighter>().gameObject.CompareTag("Enemy"))
+        if(gameObject.CompareTag("Enemy"))
         {
             myColor = Color.red;
         }
-        if (gameObject.GetComponentInParent<TriangleFighter>().gameObject.CompareTag("Player"))
+        if (gameObject.CompareTag("Player"))
         {
             myColor = Color.blue;
         }
@@ -30,7 +30,7 @@ public class BulletScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (gameObject.GetComponentInParent<TriangleFighter>().gameObject.CompareTag("Player"))
+        if (gameObject.CompareTag("Player"))
         {
             myDirection = new Vector3(0, 3.0f * Time.deltaTime, 0);
         }

@@ -2,9 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TriangleFighter : MonoBehaviour
+public class TriangleFighter : Racer
 {
-    Vector3 direction;
+    public override Vector3 Move()
+    {
+        return base.Move();
+    }
+
+    /*Vector3 direction;
     public GameObject bullet;
     float zMovement = 0;
     public static float MAX_SPEED_Z = 5.0f;
@@ -45,7 +50,7 @@ public class TriangleFighter : MonoBehaviour
         if (Input.GetKey(KeyCode.S))
         {
             yMove = -1;
-        }*/
+        }#1#
         if (zMovement < 5.0f) {
             zMovement += zMove;
         }
@@ -54,6 +59,9 @@ public class TriangleFighter : MonoBehaviour
         currentEulerAngles += new Vector3(0, xMove, 0) * Time.deltaTime * 45.0f;
         gameObject.transform.eulerAngles = currentEulerAngles;
         gameObject.transform.Translate(zMovement * Time.deltaTime, 0,0 );
-    }
+    }*/
+    /*public TriangleFighter(string racer) : base(racer)
+    {
+    }*/
 }
 
