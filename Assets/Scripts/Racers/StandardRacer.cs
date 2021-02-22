@@ -2,13 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class StandardRacer : MonoBehaviour, Racer
 {
-    public GameObject bullet;
-    Vector3 aim;
-    Vector3 direction;
-    public GameObject player;
-
     // Start is called before the first frame update
     void Start()
     {

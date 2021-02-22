@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿/*using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,7 +7,7 @@ public class TriangleFighter : Racer
     public override Vector3 Move()
     {
         return base.Move();
-    }
+    }*/
 
     /*Vector3 direction;
     public GameObject bullet;
@@ -63,5 +63,5 @@ public class TriangleFighter : Racer
     /*public TriangleFighter(string racer) : base(racer)
     {
     }*/
-}
+//}
 
